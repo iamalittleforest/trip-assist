@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// import schema from Book.js
+// import schema from POI.js
 const POISchema = require('./POI');
 
 const userSchema = new Schema(
@@ -21,8 +21,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedPOI: [poiSchema],
+    // set savedPOIs to be an array of data that adheres to the POISchema
+    savedPOI: [POISchema],
   },
   // set this to use virtual below
   {
@@ -47,8 +47,8 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('poiCount').get(function () {
+// when we query a user, we'll also get another field called `POICount` with the number of saved POIs we have
+userSchema.virtual('POICount').get(function () {
   return this.savedPOIs.length;
 });
 
