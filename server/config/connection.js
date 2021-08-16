@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/searchdb', 
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/tripdb', 
 {
   useNewUrlParser: true,
   useUnifiedTopology: true,
