@@ -1,5 +1,5 @@
 // import react dependencies
-import React, { useData } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // import chakra dependencies
@@ -27,7 +27,7 @@ import Auth from '../utils/auth';
 
 const LoginForm = () => {
 
-  const [formData, setFormData] = useData({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN_USER);
 
   const handleFormSubmit = async (event) => {
