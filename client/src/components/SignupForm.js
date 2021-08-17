@@ -11,6 +11,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Icon,
   Input,
   InputLeftElement,
   Link,
@@ -74,7 +75,7 @@ const SignupForm = () => {
                 <FormLabel>Username</FormLabel>
                 <InputLeftElement
                   pointerEvents="none"
-                  children={<BiUserCircle color="gray.300" />}
+                  children={<Icon as ={BiUserCircle} color="gray.300" />}
                 />
                 <Input
                   type="username"
