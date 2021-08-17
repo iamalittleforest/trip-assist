@@ -16,7 +16,7 @@ import {
   Stack,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { AtSignIcon, LockIcon } from '@chakra-ui/icons'
+import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
 // import apollo dependency
 import { useMutation } from '@apollo/client';
@@ -26,10 +26,10 @@ import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const LoginForm = () => {
-
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN_USER);
 
+  // handle form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -43,6 +43,7 @@ const LoginForm = () => {
     }
   };
 
+  // handle changes to input field
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -72,7 +73,7 @@ const LoginForm = () => {
                 <FormLabel>E-mail</FormLabel>
                 <InputLeftElement
                   pointerEvents="none"
-                  children={<AtSignIcon color="gray.300" />}
+                  children={<EmailIcon color="gray.300" />}
                 />
                 <Input
                   type="email"
