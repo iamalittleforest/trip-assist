@@ -17,11 +17,9 @@ const resolvers = {
             console.log('Unable to find user data', err);
           }
         }
-  
         // user is not logged in
         throw new AuthenticationError('Please log in');
       },
-
     },
   
     Mutation: {
@@ -57,23 +55,27 @@ const resolvers = {
         } catch (err) {
           console.log('Sign up error', err);
         }
-      }, 
+      },
+        
       // adding POI 
       addPOI: async (parent, { placeId, name, img, business_status, rating, vicinity}) => {
         try {
           //creating POI using provided info 
           const place = await POI.create({placeId, name, img, business_status, rating, vicinity});
-          return {place}
-          
+          return {place}   
         } catch (err) {
           console.log('POI error', err)
         }
       },
+        
+      // save POI and add to user
       savePOI: async(parent, { POIToSave }, context) => {
+        // user is logged in
         if (context.user) {
           try {
+            // find and update user matching logged in user id
             const user = await User.findOneAndUpdate(
-              {_id: oncontextmenu.user._id},
+              {_id: context.user._id},
               {$addToSet: { savedPOIs: POIToSave}},
               { new: true } 
             );
@@ -85,11 +87,10 @@ const resolvers = {
         }
       },
 
-      //delet POi from user
+      //delete POI from user
       removePOI: async(parent, {placeId}, context) => {
         //user is logged in
-        if (context.user){
-
+        if (context.user) {
           try {
             //find and update user matching logged in user id
             const user = await User.findOneAndUpdate(
@@ -103,7 +104,9 @@ const resolvers = {
               console.log('Remove POI error', err)
             }
           }
-        }
+        // user is not logged in
+        throw new AuthenticationError('Please log in');        
+        },
     },
   };
   
