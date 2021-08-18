@@ -1,34 +1,26 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
-const POISchema = new Schema(
-    {
-        name: {
-            type: String,
-            require: true,
-            unique: true 
-        },
-        rating: {
-            type: Number,
-        },
-        img:{
-            type:Image,
+const POISchema = new Schema({
+  placeId: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    require: true,
+  },
+  img:{
+    type: String,
+  },
+  business_status: {
+    type: String,
+  },
+  rating: {
+    type: Number,
+  },
+  vicinity: {
+    type: String,
+  },
+});
 
-        },
-        business_status: {
-            type: String,
-        },
-        vicinity: {
-            type: String,
-        },
-
-
-    }
-)
-
-
-
-
-
-
-
-module.exports = POISchema
+module.exports = POISchema;
