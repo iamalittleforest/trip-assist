@@ -17,6 +17,14 @@ const typeDefs = gql`
     email: String!
     password: String!
   }
+  type POI {
+    placeId: String!
+    name: String!
+    img: String
+    business_status: String
+    rating: Number
+    vicinity: String
+  }
 
   type Auth {
     token: ID!
