@@ -16,6 +16,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "graphql": "^15.5.1"
+    "graphql": "^15.5.1",
+    "web-vitals": "^2.1.0"
   }
 }
