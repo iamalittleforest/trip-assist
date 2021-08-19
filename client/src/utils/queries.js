@@ -9,14 +9,13 @@ export const QUERY_ME = gql`
       username
       email
       savedPOIs {
-        placeId: String!
-        name: String!
-        img: String
-        business_status: String
-        rating: Number
-        vicinity: String
+        placeId
+        name
+        img
+        business_status
+        rating
+        vicinity
       }
     }
   }
 `;
-
