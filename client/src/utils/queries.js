@@ -8,6 +8,14 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      savedPOIs {
+        placeId
+        name
+        img
+        business_status
+        rating
+        vicinity
+      }
     }
   }
 `;
