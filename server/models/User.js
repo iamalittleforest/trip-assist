@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 // import schema from POI.js
-const POISchema = require('./POI');
+const POISchema = require("./POI");
 
 const userSchema = new Schema(
   {
@@ -15,14 +15,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
+      match: [/.+@.+\..+/, "Must use a valid email address"],
     },
     password: {
       type: String,
       required: true,
     },
     // set savedPOIs to be an array of data that adheres to the POISchema
-    savedPOI: [POISchema],
+    savedPOIs: [POISchema],
   },
   // set this to use virtual below
   {
@@ -33,8 +33,8 @@ const userSchema = new Schema(
 );
 
 // hash user password
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -48,10 +48,10 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // when we query a user, we'll also get another field called `POICount` with the number of saved POIs we have
-userSchema.virtual('POICount').get(function () {
+userSchema.virtual("POICount").get(function () {
   return this.savedPOIs.length;
 });
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;
