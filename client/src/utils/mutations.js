@@ -1,7 +1,7 @@
 // import dependency
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
-// define mutaion for login
+// define mutation for logging in
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -36,7 +36,7 @@ export const SAVE_POI = gql`
       _id
       username
       email
-      savedPoi {
+      savedPOI {
         placeId
         name
         img
@@ -55,7 +55,7 @@ export const REMOVE_POI = gql`
       _id
       username
       email
-      savedPoi {
+      savedPOI {
         placeId
         name
         img
