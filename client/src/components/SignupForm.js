@@ -1,6 +1,6 @@
 // import react dependencies
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link as ReactLink } from 'react-router-dom';
 import { BiUserCircle } from 'react-icons/bi';
 
 // import chakra dependencies
@@ -13,12 +13,13 @@ import {
   Heading,
   Icon,
   Input,
+  InputGroup,
   InputLeftElement,
   Link,
   Stack,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { AtSignIcon } from '@chakra-ui/icons'
+import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
 // import apollo dependency
 import { useMutation } from '@apollo/client';
@@ -73,47 +74,53 @@ const SignupForm = () => {
             <form onSubmit={handleFormSubmit}>
               <FormControl id="username" isRequired>
                 <FormLabel>Username</FormLabel>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<Icon as ={BiUserCircle} color="gray.300" />}
-                />
-                <Input
-                  type="username"
-                  placeholder='Username'
-                  name='username'
-                  onChange={handleChange}
-                  value={formData.username}
-                />
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<Icon as={BiUserCircle} color="gray.300" />}
+                  />
+                  <Input
+                    type="username"
+                    placeholder='Username'
+                    name='username'
+                    onChange={handleChange}
+                    value={formData.username}
+                  />
+                </InputGroup>
               </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>E-mail</FormLabel>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<AtSignIcon color="gray.300" />}
-                />
-                <Input
-                  type="email"
-                  placeholder='E-mail'
-                  name='email'
-                  onChange={handleChange}
-                  value={formData.email}
-                />
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<EmailIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="email"
+                    placeholder='E-mail'
+                    name='email'
+                    onChange={handleChange}
+                    value={formData.email}
+                  />
+                </InputGroup>
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<LockIcon color="gray.300" />}
-                />
-                <Input
-                  type="password"
-                  placeholder='Password'
-                  name='password'
-                  onChange={handleChange}
-                  value={formData.password}
-                />
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<LockIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="password"
+                    placeholder='Password'
+                    name='password'
+                    onChange={handleChange}
+                    value={formData.password}
+                  />
+                </InputGroup>
               </FormControl>
-              <Stack spacing={10}>
+              <Stack spacing={3}>
                 <Button
                   bg={'blue.400'}
                   color={'white'}
@@ -122,7 +129,9 @@ const SignupForm = () => {
                   Log In
                 </Button>
                 <Stack align={'start'}>
-                  <Link as={Link} to={'/login'} color={'blue.400'}>Log In</Link>
+                  <BrowserRouter>
+                    <Link as={ReactLink} to={'/login'} color={'blue.400'}>Log In</Link>
+                  </BrowserRouter>
                 </Stack>
               </Stack>
             </form>
