@@ -1,4 +1,8 @@
 // import react dependencies 
+import React from 'react';
+import { VscGithub } from "react-icons/vsc";
+
+// import chakra dependencies
 import {
   Box,
   IconButton,
@@ -7,7 +11,6 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { VscGithub } from "react-icons/vsc";
 
 const Footer = () => {
   return (
