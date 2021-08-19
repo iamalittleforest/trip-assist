@@ -1,6 +1,6 @@
 // import react dependencies
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link as ReactLink } from 'react-router-dom';
 
 // import chakra dependencies
 import {
@@ -11,6 +11,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
   InputLeftElement,
   Link,
   Stack,
@@ -67,37 +68,41 @@ const LoginForm = () => {
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}>
-          <Stack spacing={4}>
+          <Stack spacing={3}>
             <form onSubmit={handleFormSubmit}>
               <FormControl id="email" isRequired>
                 <FormLabel>E-mail</FormLabel>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<EmailIcon color="gray.300" />}
-                />
-                <Input
-                  type="email"
-                  placeholder='E-mail'
-                  name='email'
-                  onChange={handleChange}
-                  value={formData.email}
-                />
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<EmailIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="email"
+                    placeholder='E-mail'
+                    name='email'
+                    onChange={handleChange}
+                    value={formData.email}
+                  />
+                </InputGroup>
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<LockIcon color="gray.300" />}
-                />
-                <Input
-                  type="password"
-                  placeholder='Password'
-                  name='password'
-                  onChange={handleChange}
-                  value={formData.password}
-                />
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<LockIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="password"
+                    placeholder='Password'
+                    name='password'
+                    onChange={handleChange}
+                    value={formData.password}
+                  />
+                </InputGroup>
               </FormControl>
-              <Stack spacing={10}>
+              <Stack spacing={3}>
                 <Button
                   bg={'blue.400'}
                   color={'white'}
@@ -106,7 +111,9 @@ const LoginForm = () => {
                   Sign In
                 </Button>
                 <Stack align={'start'}>
-                  <Link as={Link} to={'/signup'} color={'blue.400'}>Sign Up</Link>
+                  <BrowserRouter>
+                    <Link as={ReactLink} to={'/signup'} color={'blue.400'}>Sign Up</Link>
+                  </BrowserRouter>
                 </Stack>
               </Stack>
             </form>
