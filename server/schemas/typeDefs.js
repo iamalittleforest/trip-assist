@@ -28,7 +28,7 @@ const typeDefs = gql`
     name: String!
     img: String
     business_status: String
-    rating: Number
+    rating: Float
     vicinity: String
   }
 
@@ -42,7 +42,7 @@ const typeDefs = gql`
     name: String!
     img: String
     business_status: String
-    rating: Number
+    rating: Float
     vicinity: String
   }
 `;
