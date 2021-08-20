@@ -1,23 +1,28 @@
 // import dependencies
-import React from 'react';
-import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_ME } from '../utils/queries';
-import { POI } from '../utils/mutations';
-import {} from '../utils/localStorage';
-import Auth from '../utils/auth';
+import React from "react";
+import {
+  Jumbotron,
+  Container,
+  CardColumns,
+  Card,
+  Button,
+} from "react-bootstrap";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
+import { REMOVE_POI } from "../utils/mutations";
+import { removePOIId } from "../utils/localStorage";
+import Auth from "../utils/auth";
 
-const SavedPoi = () => {
-
+const SavedPOIs = () => {
   // set query for pulling data
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
   // set mutation for removing POI
-  const [removePoi] = useMutation(REMOVE_POI);
+  const [removePOI] = useMutation(REMOVE_POI);
 
   // create function that accepts the POI's mongo _id value as param and deletes the POI from the database
-  const handleDeletePoi = async (poiId) => {
+  const handleDeletePOI = async (placeId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -26,16 +31,16 @@ const SavedPoi = () => {
 
     // remove POI
     try {
-      const response = await removePoi({
-        variables: { poiId },
+      const response = await removePOI({
+        variables: { placeId },
       });
 
       if (!response.data) {
-        throw new Error('something went wrong!');
+        throw new Error("something went wrong!");
       }
 
       // upon success, remove POI's id from localStorage
-      removePoiId(poiId);
+      removePOIId(placeId);
     } catch (err) {
       console.error(err);
     }
@@ -48,29 +53,44 @@ const SavedPoi = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className="text-light bg-dark">
         <Container>
-            {/* Might need to change title later */}
-          <h1>Viewing saved POI!</h1>
+          {/* Might need to change title later */}
+          <h1>Viewing saved POIs!</h1>
         </Container>
       </Jumbotron>
       <Container>
         <h2>
-          {userData.savedPoi.length
-            ? `Viewing ${userData.savedPoi.length} saved ${userData.savedPoi.length === 1 ? 'poi' : 'pois'}:`
-            : 'You have no saved POI!'}
+          {userData.savedPOIs.length
+            ? `Viewing ${userData.savedPOIs.length} saved ${
+                userData.savedPOIs.length === 1 ? "POI" : "POIs"
+              }:`
+            : "You have no saved POI!"}
         </h2>
         <CardColumns>
-          {userData.savedPois.map((poi) => {
+          {userData.savedPOIs.map((POI) => {
             return (
-              <Card key={poi.poiId} border='dark'>
-                {poi.image ? <Card.Img src={poi.image} alt={`The cover for ${poi.title}`} variant='top' /> : null}
+              <Card key={POI.placeId} border="dark">
+                {POI.img ? (
+                  <Card.Img
+                    src={POI.img}
+                    alt={`The cover for ${POI.name}`}
+                    variant="top"
+                  />
+                ) : null}
                 <Card.Body>
-                  <Card.Title>{poi.title}</Card.Title>
-                  <p className='small'>Authors: {poi.authors}</p>
-                  <Card.Text>{poi.description}</Card.Text>
-                  <Button className='btn-block btn-danger' onClick={() => handleDeletePoi(poi.poiId)}>
-                      {/* Might have to change line below later  */}
+                  <Card.Title>{POI.name}</Card.Title>
+                  <p className="small">Vicinity: {POI.vicinity}</p>
+                  {/* instead of description use rating? */}
+                  <p className="small">
+                    Business Status: {POI.business_status}
+                  </p>
+                  <Card.Text> Rating: {POI.rating}</Card.Text>
+                  <Button
+                    className="btn-block btn-danger"
+                    onClick={() => handleDeletePOI(POI.placeId)}
+                  >
+                    {/* Might have to change line below later  */}
                     Delete this POI!
                   </Button>
                 </Card.Body>
@@ -83,4 +103,4 @@ const SavedPoi = () => {
   );
 };
 
-export default SavedPois;
+export default SavedPOIs;
