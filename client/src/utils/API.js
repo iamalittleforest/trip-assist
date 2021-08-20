@@ -1,6 +1,6 @@
 import React, { useState, Component } from "react";
 import axios from "axios";
-import Card from "../Card";
+import Card from "../components/POICard";
 
 
 const key = "AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
