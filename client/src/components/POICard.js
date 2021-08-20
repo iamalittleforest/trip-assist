@@ -29,10 +29,13 @@ export const Card = ({url, name}) => {
           mx={-6}
           mb={6}
           pos={'relative'}
+          overflow={'hidden'}
           boxSize="sm">
           <Image
+            boxSize="200px"
             src={url}
             layout={'objectFit'}
+            style={{objectFit: "cover"}}
           />
         </Box>
         <Stack>
