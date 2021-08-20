@@ -13,7 +13,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import Footer from './components/Footer';
-
+import API from './utils/API';
 // create main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -43,6 +43,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <API/>
       <ChakraProvider>
         <SignupForm />
         <LoginForm />
