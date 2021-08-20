@@ -9,9 +9,10 @@ import { setContext } from '@apollo/client/link/context';
 // import chakra dependencies
 import { ChakraProvider } from '@chakra-ui/react';
 
-// import pages
-import LoginForm from './components/LoginForm';
-import SignupForm from './components/SignupForm';
+// import pages and components
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+// import Nav from './components/Nav';
 import Footer from './components/Footer';
 
 // create main GraphQL API endpoint
@@ -44,8 +45,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
-        <SignupForm />
-        <LoginForm />
+        {/* <Navbar /> */}
+        <Signup />
+        <Login />
         <Footer />
       </ChakraProvider>
     </ApolloProvider>
