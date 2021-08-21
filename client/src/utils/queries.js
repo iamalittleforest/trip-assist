@@ -9,7 +9,7 @@ export const QUERY_ME = gql`
       username
       email
       savedPOIs {
-        placeId
+        POI_id
         name
         img
         business_status
