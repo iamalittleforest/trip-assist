@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.15.0",
     "concurrently": "^5.1.0"
   },
   "dependencies": {
