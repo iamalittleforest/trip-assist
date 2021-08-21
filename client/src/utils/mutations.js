@@ -37,7 +37,7 @@ export const SAVE_POI = gql`
       username
       email
       savedPOIs {
-        placeId
+        POI_id
         name
         img
         business_status
@@ -50,13 +50,13 @@ export const SAVE_POI = gql`
 
 // define mutation for removing a poi
 export const REMOVE_POI = gql`
-  mutation removePOI($placeId: ID!) {
-    removePOI(placeId: $placeId) {
+  mutation removePOI($POI_id: ID!) {
+    removePOI(POI_id: $POI_id) {
       _id
       username
       email
       savedPOIs {
-        placeId
+        POI_id
         name
         img
         business_status
