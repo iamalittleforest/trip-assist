@@ -33,7 +33,7 @@ const SearchPOI = () => {
   const [searchInput, setSearchInput] = useState("");
 
   // create state to hold saved POI Id values
-  const [savedPOIds, setSavedPOIds] = useState(getSavedPOIIds());
+  const [savedPOIIds, setSavedPOIIds] = useState(getSavedPOIIds());
 
   const [attractions, setAttractions] = useState([]);
 
