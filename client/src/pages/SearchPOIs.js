@@ -1,12 +1,23 @@
 // import dependencies
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import axios from "axios";
 import { useMutation } from '@apollo/client';
 import { SAVE_POI} from '../utils/mutations';
 import {  } from '../utils/API';
 // need to import saved POI logic when ready
 import {} from '../utils/localStorage';
 import Auth from '../utils/auth';
+
+//API Key
+const key = "AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
+// API urls
+const baseURL1 =
+  "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry";
+const baseURL2 =
+  "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction&key=AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
+const baseURL3 =
+  "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
 
 const SearchPoi = () => {
 
@@ -19,6 +30,30 @@ const SearchPoi = () => {
   // create state to hold saved POI Id values
   const [savedPoids, setSavedPoids] = useState(getSavedPoiIds());
 
+  const [attractions, setAttractions] = useState([]);
+
+  const findAttractions = (lonlat) => {
+    axios.get(baseURL2 + "&location=" + lonlat).then(({ data }) => {
+      console.log("Raw data", data);
+      getImgs(
+        data.results.map((a) => a.photos?.[0].photo_reference),
+        data.results
+      );
+    });
+  };
+    const getImgs = async (refs, attractions) => {
+      const urls = refs.map((ref) =>
+        ref
+          ? baseURL3 + "&photo_reference=" + ref
+          : "https://cdn.shopify.com/s/files/1/0054/4371/5170/products/FiGPiN_360HelloKittySANRIOPIN.png?v=1627413934"
+      );
+      setAttractions(
+        attractions.map((a, i) => {
+          a.url = urls[i];
+          return a;
+        })
+      );
+    };
   // set up useEffect hook to save `savedPoiIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -29,35 +64,26 @@ const SearchPoi = () => {
   const [savePoi] = useMutation(SAVE_POI);
 
   // create method to search for POIs and set state on form submit
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!searchInput) {
-      return false;
-    }
-
-    try {
-        // need to find function name to replace Google POI
-      const response = await searchGooglePOI(searchInput);
-
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { items } = await response.json();
-
-      const poiData = items.map((poi) => ({
-        poiId: poi.id,
-        title: poi.volumeInfo.title,
-        description: poi.volumeInfo.description,
-        image: poi.volumeInfo.imageLinks?.thumbnail || '',
-      }));
-
-      setSearchedPois(poiData);
-      setSearchInput('');
-    } catch (err) {
-      console.error(err);
-    }
+  const handleFormSubmit =  () => {
+      axios
+        .get(`${baseURL1}&key=${key}&input=${searchInput}`)
+        .then((response) => {
+          console.log("BaseURl1", response.data.candidates);
+          const { lng, lat } = response.data.candidates[0].geometry.location;
+          findAttractions(`${lat},${lng}`);
+        })
+    const searchedData = items.map((results) => ({
+      placeId: results.place_id,
+      name: results.name,
+      rating: results.rating,
+      img:results.photos,
+      business_status: results.business_status,
+      vicinity: results.vicinity
+}))
+    
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
   // create function to handle saving a POI to our database
