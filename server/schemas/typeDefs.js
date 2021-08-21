@@ -11,7 +11,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     savePOI(POIToSave: POIInput): User
-    removePOI(placeId: ID!): User
+    removePOI(POI_id: ID!): User
   }
 
   type User {
@@ -19,12 +19,11 @@ const typeDefs = gql`
     username: String!
     email: String!
     password: String!
-    POICount: Int
     savedPOIs: [POI]
   }
 
   type POI {
-    placeId: String!
+    POI_id: String!
     name: String!
     img: String
     business_status: String
@@ -38,7 +37,7 @@ const typeDefs = gql`
   }
 
   input POIInput {
-    placeId: String!
+    POI_id: String!
     name: String!
     img: String
     business_status: String

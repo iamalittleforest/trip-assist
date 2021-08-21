@@ -77,14 +77,14 @@ const resolvers = {
     },
 
     // delete POI from user
-    removePOI: async (parent, { placeId }, context) => {
+    removePOI: async (parent, { POI_id }, context) => {
       //user is logged in
       if (context.user) {
         try {
           //find and update user matching logged in user id
           const user = await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $pull: { savedPOIs: { placeId: placeId } } },
+            { $pull: { savedPOIs: { POI_id: POI_id } } },
             { new: true }
           );
           //return updated POI
