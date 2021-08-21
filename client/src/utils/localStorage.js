@@ -1,30 +1,32 @@
-export const getSavedPoiIds = () => {
-  const savedPoiIds = localStorage.getItem('saved_pois')
-    ? JSON.parse(localStorage.getItem('saved_pois'))
+export const getSavedPOIIds = () => {
+  const savedPOIIds = localStorage.getItem("saved_POIs")
+    ? JSON.parse(localStorage.getItem("saved_POIs"))
     : [];
 
-  return savedPoiIds;
+  return savedPOIIds;
 };
 
-export const savePoiIds = (poiIdArr) => {
-  if (poiIdArr.length) {
-    localStorage.setItem('saved_pois', JSON.stringify(poiIdArr));
+export const savePOIIds = (POIIdArr) => {
+  if (POIIdArr.length) {
+    localStorage.setItem("saved_POIis", JSON.stringify(POIIdArr));
   } else {
-    localStorage.removeItem('saved_pois');
+    localStorage.removeItem("saved_POIs");
   }
 };
 
-export const removePoiId = (poiId) => {
-  const savedPoiIds = localStorage.getItem('saved_pois')
-    ? JSON.parse(localStorage.getItem('saved_pois'))
+export const removePOIId = (POIId) => {
+  const savedPOIIds = localStorage.getItem("saved_POIs")
+    ? JSON.parse(localStorage.getItem("saved_POIs"))
     : null;
 
-  if (!savedPoiIds) {
+  if (!savedPOIIds) {
     return false;
   }
 
-  const updatedSavedPoiIds = savedPoiIds?.filter((savedPoiId) => savedPoiId !== poiId);
-  localStorage.setItem('saved_pois', JSON.stringify(updatedSavedPoiIds));
+  const updatedSavedPOIIds = savedPOIIds?.filter(
+    (savedPOIId) => savedPOIId !== POIId
+  );
+  localStorage.setItem("saved_POIs", JSON.stringify(updatedSavedPOIIds));
 
   return true;
 };

@@ -22,7 +22,7 @@ const SavedPOIs = () => {
   const [removePOI] = useMutation(REMOVE_POI);
 
   // create function that accepts the POI's mongo _id value as param and deletes the POI from the database
-  const handleDeletePOI = async (placeId) => {
+  const handleDeletePOI = async (POI_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -32,7 +32,7 @@ const SavedPOIs = () => {
     // remove POI
     try {
       const response = await removePOI({
-        variables: { placeId },
+        variables: { POI_id },
       });
 
       if (!response.data) {
@@ -40,7 +40,7 @@ const SavedPOIs = () => {
       }
 
       // upon success, remove POI's id from localStorage
-      removePOIId(placeId);
+      removePOIId(POI_id);
     } catch (err) {
       console.error(err);
     }
@@ -70,7 +70,7 @@ const SavedPOIs = () => {
         <CardColumns>
           {userData.savedPOIs.map((POI) => {
             return (
-              <Card key={POI.placeId} border="dark">
+              <Card key={POI.POI_id} border="dark">
                 {POI.img ? (
                   <Card.Img
                     src={POI.img}
@@ -88,7 +88,7 @@ const SavedPOIs = () => {
                   <Card.Text> Rating: {POI.rating}</Card.Text>
                   <Button
                     className="btn-block btn-danger"
-                    onClick={() => handleDeletePOI(POI.placeId)}
+                    onClick={() => handleDeletePOI(POI.POI_id)}
                   >
                     {/* Might have to change line below later  */}
                     Delete this POI!

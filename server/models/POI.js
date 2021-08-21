@@ -1,7 +1,7 @@
-const { Schema } = require('mongoose');
+const { Schema } = require("mongoose");
 
 const POISchema = new Schema({
-  placeId: {
+  POI_id: {
     type: String,
     required: true,
   },
@@ -9,7 +9,7 @@ const POISchema = new Schema({
     type: String,
     require: true,
   },
-  img:{
+  img: {
     type: String,
   },
   business_status: {
