@@ -15,6 +15,7 @@ import Signup from './pages/Signup';
 // import Nav from './components/Nav';
 import Footer from './components/Footer';
 import API from './utils/API';
+import SearchPois from './pages/SearchPOIs';
 // create main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -44,6 +45,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <SearchPois/>
       <API/>
       <ChakraProvider>
         {/* <Navbar /> */}
