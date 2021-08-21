@@ -18,14 +18,12 @@ import {} from "../utils/localStorage";
 import Auth from "../utils/auth";
 
 //API Key
-const key = "AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
+const { REACT_APP_API_KEY } = process.env;
 // API urls
 const baseURL1 =
   "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry";
-const baseURL2 =
-  "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction&key=AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
-const baseURL3 =
-  "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAGMm8VfMoIWD35Z0G0dNAldoEokk20Vow";
+const baseURL2 = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction&key=${REACT_APP_API_KEY}`;
+const baseURL3 = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=${REACT_APP_API_KEY}`;
 
 const SearchPOI = () => {
   // create state for holding returned google api data
@@ -73,7 +71,7 @@ const SearchPOI = () => {
   // create method to search for POIs and set state on form submit
   const handleFormSubmit = () => {
     axios
-      .get(`${baseURL1}&key=${key}&input=${searchInput}`)
+      .get(`${baseURL1}&key=${REACT_APP_API_KEY}}&input=${searchInput}`)
       .then((response) => {
         console.log("BaseURl1", response.data.candidates);
         const { lng, lat } = response.data.candidates[0].geometry.location;
