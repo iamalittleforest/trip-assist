@@ -1,10 +1,11 @@
 // import dependency
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 // define object types
 const typeDefs = gql`
   type Query {
     me: User
+    getKey: String!
   }
 
   type Mutation {

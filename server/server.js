@@ -2,7 +2,7 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
-
+require("dotenv").config();
 // import for schema
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
@@ -22,8 +22,9 @@ const server = new ApolloServer({
 // run Apollo server
 (async () => {
   // start Apollo server
-  await server.start();
 
+  await server.start();
+  console.log("server started");
   // set up Express app to use Apollo server features
   server.applyMiddleware({ app });
 })();

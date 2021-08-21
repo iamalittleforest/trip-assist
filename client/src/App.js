@@ -1,7 +1,6 @@
 // import react dependencies
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 // import apollo dependencies
 import {
   ApolloClient,
