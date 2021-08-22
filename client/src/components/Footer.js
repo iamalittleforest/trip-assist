@@ -1,22 +1,21 @@
 // import react dependencies 
 import React from 'react';
-import { VscGithub } from "react-icons/vsc";
+import { FaGithub } from 'react-icons/fa';
 
 // import chakra dependencies
 import {
   Box,
-  IconButton,
+  Button,
   Container,
   Stack,
-  Text,
-  useColorModeValue,
+  Text
 } from '@chakra-ui/react';
 
 const Footer = () => {
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}>
+      bg={'blue.700'}
+      color={'white'}>
       <Container
         as={Stack}
         maxW={'6xl'}
@@ -25,16 +24,15 @@ const Footer = () => {
         spacing={4}
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
-        <Text>© 2021 Trip Assist. All rights reserved</Text>
+        <Text>© 2021 Trip Assist.</Text>
         <Stack direction={'row'} spacing={6}>
-          <IconButton
-            variant="outline"
-            colorScheme="teal"
-            aria-label="GitHub"
-            fontSize="20px"
-            icon={<VscGithub />}
-            // onClick={}
-          />
+          <Button
+            colorScheme='github'
+            leftIcon={<FaGithub />}
+          // onClick={}
+          >
+            GitHub
+          </Button>
         </Stack>
       </Container>
     </Box>
