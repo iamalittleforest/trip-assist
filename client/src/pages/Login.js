@@ -14,8 +14,7 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
-  Stack,
-  useColorModeValue,
+  Stack
 } from '@chakra-ui/react';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
@@ -58,27 +57,27 @@ const LoginForm = () => {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}>
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      bg={'gray.50'}>
+      <Stack spacing={5} mx={'auto'} maxW={'lg'}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign In</Heading>
+          <Heading fontSize={'4xl'}>Log In</Heading>
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={'white'}
           boxShadow={'lg'}
           p={8}>
-          <Stack spacing={3}>
-            <form onSubmit={handleFormSubmit}>
-              <FormControl id="email" isRequired>
+          <form onSubmit={handleFormSubmit}>
+            <Stack mb={3}>
+              <FormControl id='email' isRequired>
                 <FormLabel>E-mail</FormLabel>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
-                    children={<EmailIcon color="gray.300" />}
+                    pointerEvents='none'
+                    children={<EmailIcon color='gray.300' />}
                   />
                   <Input
-                    type="email"
+                    type='email'
                     placeholder='E-mail'
                     name='email'
                     onChange={handleChange}
@@ -86,15 +85,17 @@ const LoginForm = () => {
                   />
                 </InputGroup>
               </FormControl>
-              <FormControl id="password" isRequired>
+            </Stack>
+            <Stack mb={5}>
+              <FormControl id='password' isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
-                    children={<LockIcon color="gray.300" />}
+                    pointerEvents='none'
+                    children={<LockIcon color='gray.300' />}
                   />
                   <Input
-                    type="password"
+                    type='password'
                     placeholder='Password'
                     name='password'
                     onChange={handleChange}
@@ -102,22 +103,22 @@ const LoginForm = () => {
                   />
                 </InputGroup>
               </FormControl>
-              <Stack spacing={3}>
-                <Button
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{ bg: 'blue.500' }}
-                >
-                  Sign In
-                </Button>
-                <Stack align={'start'}>
-                  <BrowserRouter>
-                    <Link as={ReactLink} to={'/signup'} color={'blue.400'}>Sign Up</Link>
-                  </BrowserRouter>
-                </Stack>
+            </Stack>
+            <Stack spacing={3}>
+              <Button
+                bg={'blue.500'}
+                color={'white'}
+                _hover={{ bg: 'blue.700' }}
+              >
+                Log In
+              </Button>
+              <Stack align={'start'}>
+                <BrowserRouter>
+                  <Link as={ReactLink} to={'/signup'} color={'blue.500'}>Sign Up</Link>
+                </BrowserRouter>
               </Stack>
-            </form>
-          </Stack>
+            </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>
