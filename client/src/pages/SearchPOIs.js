@@ -38,7 +38,7 @@ const SearchPOIs = () => {
   // create state for holding input data
   const [searchInput, setSearchInput] = useState('');
   // create state to hold saved POI Id values
-  const [savedPOIIds, setSavedPOIIds] = useState([]);
+  const [savedPOIIds, setSavedPOIIds] = useState(getSavedPOIIds());
   // create state to hold API key
   const [key, setKey] = useState('');
   // set query for getting API key
@@ -51,6 +51,7 @@ const SearchPOIs = () => {
     return () => savePOIIds(savedPOIIds);
   });
 
+  // set up useEffect hook to getKey
   useEffect(() => {
     !loading && setKey(data?.getKey);
   }, [loading]);
@@ -66,6 +67,7 @@ const SearchPOIs = () => {
     // use cached data if it exists
     if (localStorage.getItem(searchInput.toLowerCase().trim())) {
       console.log('using cached data ---');
+      
       return setSearchedPOIs(
         JSON.parse(localStorage.getItem(searchInput.toLowerCase().trim()))
       );
@@ -73,9 +75,9 @@ const SearchPOIs = () => {
 
     // get data from API
     try {
-      console.log('searching using API --- ');
+      console.log('using API --- ');
 
-      // get location values from input
+      // get location from input
       axios
         .get(`${getLocation}&key=${key}&input=${searchInput}`)
         .then((res) => {
@@ -94,51 +96,45 @@ const SearchPOIs = () => {
           .then(({ data }) => {
             console.log('getPOIs', data);
             getImgs(
-              data.results.map((a) => a.photos?.[0].photo_reference),
+              data.results.map((POI) => POI.photos?.[0].photo_reference),
               data.results
             );
           });
       };
-
-
-      const getImgs = async (refs, searchedPOIs) => {
-        const urls = refs.map((ref) =>
-          ref
-            ? `${getImgURL}&key=${key}&photo_reference=${ref}`
-            : 'https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg'
-        );
-
-        const POI_Data = searchedPOIs.map((a, i) => {
-          a.POI_id = a.place_id;
-          a.url = urls[i];
-          a.img = a.url;
-          return a;
-        });
-
-        //store in state also store in localstorage for caching search results
-        setSearchedPOIs(POI_Data);
-        localStorage.setItem(
-          searchInput.toLowerCase().trim(),
-          JSON.stringify(POI_Data)
-        );
-      };
-
-      // const { POIs } = await response.json();
-
-      // const POIData = searchedPOIs.map((POI) => ({
-      //   POI_id: POI.POI_id,
-      //   name: POI.name,
-      //   img: POI.photos,
-      //   business_status: POI.business_status,
-      //   rating: POI.rating,
-      //   vicinity: POI.vicinity,
-      // }));
-
-      // setSearchedPOIs(POIData);
-      // setSearchInput('');
     } catch (err) {
       console.error(err);
     }
+  }
+
+  // use POIs to get imgs
+  const getImgs = async (photoRefs, searchedPOIs) => {
+
+    // get img URLs
+    const imgUrls = photoRefs.map((photoRef) =>
+      photoRef
+        ? `${getImgURL}&key=${key}&photo_reference=${photoRef}`
+        : 'https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg'
+    );
+
+    // save POI data
+    const POIData = searchedPOIs.map((POI, i) => ({
+      POI_id: POI.place_id,
+      name: POI.name,
+      img: imgUrls[i],
+      business_status: POI.business_status,
+      rating: POI.rating,
+    }));
+
+    // save POI data to localStorage
+    localStorage.setItem(
+      searchInput.toLowerCase().trim(),
+      JSON.stringify(POIData)
+    );
+
+    // save POI data to state
+    setSearchedPOIs(POIData);
+    // clear search
+    setSearchInput('');
   };
 
   // create function to handle saving a POI to our database
@@ -154,18 +150,18 @@ const SearchPOIs = () => {
 
     // save POI
     try {
-      const res = await savePOI({
+      const response = await savePOI({
         variables: { POIToSave },
       });
 
-      if (!res.data) {
+      if (!response.data) {
         throw new Error('something went wrong!');
       }
 
-      // if POI successfully saves to user's account, save POI id to state
+      // save POI id to state
       setSavedPOIIds([...savedPOIIds, POIToSave.POI_id]);
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   };
 
@@ -173,7 +169,7 @@ const SearchPOIs = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Search for places to go!</h1>
+          <h1>Where do you want to go?</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
