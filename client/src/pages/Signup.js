@@ -1,6 +1,6 @@
 // import react dependencies
 import React, { useState } from 'react';
-import { BrowserRouter, Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
 import { BiUserCircle } from 'react-icons/bi';
 
 // import chakra dependencies
@@ -56,7 +56,7 @@ const SignupForm = () => {
 
   return (
     <Flex
-      minH={'100vh'}
+      minH={'85vh'}
       align={'center'}
       justify={'center'}
       bg={'gray.50'}>
@@ -133,9 +133,7 @@ const SignupForm = () => {
                 Sign Up
               </Button>
               <Stack align={'start'}>
-                <BrowserRouter>
-                  <Link as={ReactLink} to={'/login'} color={'blue.500'}>Log In</Link>
-                </BrowserRouter>
+                <Link as={ReactLink} to='/login' color={'blue.500'}>Log In</Link>
               </Stack>
             </Stack>
           </form>

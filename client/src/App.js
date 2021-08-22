@@ -20,6 +20,7 @@ import Signup from './pages/Signup';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import SearchPOIs from './pages/SearchPOIs';
+import SavedPOIs from './pages/SavedPOIs';
 
 // create main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -49,13 +50,18 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ChakraProvider>
-        <Nav />
-        <SearchPOIs />
-        <Signup />
-        <Login />
-        <Footer />
-      </ChakraProvider>
+      <Router>
+        <ChakraProvider>
+          <Nav />
+          <Switch>
+            <Route exact path='/' component={SearchPOIs} />
+            <Route exact path='/savedPOIs' component={SavedPOIs} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
+          </Switch>
+          <Footer />
+        </ChakraProvider>
+      </Router>
     </ApolloProvider>
   );
 }

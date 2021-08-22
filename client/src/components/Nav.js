@@ -1,23 +1,16 @@
 // import react dependencies
 import React, { useState } from 'react';
-import { Link as ReactLink } from 'react-router-dom';
 
 // import auth
 import Auth from '../utils/auth';
 
-// import pages
-// import Login from './pages/Login';
-// import Signup from './pages/Signup';
-// import SearchPOIs from '../pages/SearchPOIs';
-// import SavedPOIs from '../pages/SavedPOIs';
-
 // import chakra dependencies 
-import { 
-  Link, 
-  Box, 
-  Flex, 
-  Text,
-  Stack 
+import {
+  Box,
+  Flex,
+  Link,
+  Stack,
+  Text
 } from '@chakra-ui/react';
 
 import Logo from './Logo';
@@ -86,16 +79,24 @@ const MenuLinks = ({ isOpen }) => {
       flexBasis={{ base: '100%', md: 'auto' }}
     >
       <Stack
-        spacing={8}
+        spacing={5}
         align='center'
         justify={['center', 'space-between', 'flex-end', 'flex-end']}
         direction={['column', 'row', 'row', 'row']}
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to='/'>Home</MenuItem>
-        <MenuItem to='/savedPOIs'>Collection</MenuItem>
-        <MenuItem to='/login'>Log In</MenuItem>
-        <MenuItem to='/signup' isLast>Sign Up</MenuItem>
+        {Auth.loggedIn() ? (
+          <>
+            <MenuItem to='/savedPOIs'>Collection</MenuItem>
+            <MenuItem onClick={Auth.logout}>Log Out</MenuItem>
+          </>
+        ) : (
+          <>
+            <MenuItem to='/login'>Log In</MenuItem>
+            <MenuItem to='/signup' isLast>Sign Up</MenuItem>
+          </>
+        )}
       </Stack>
     </Box>
   );
@@ -109,7 +110,7 @@ const NavBarContainer = ({ children, ...props }) => {
       justify='space-between'
       wrap='wrap'
       w='100%'
-      p={8}
+      p={5}
       bg={'blue.700'}
       color={'white'}
       {...props}

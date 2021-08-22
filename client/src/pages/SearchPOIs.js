@@ -1,5 +1,5 @@
 // import react dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Jumbotron,
   Container,
@@ -8,46 +8,45 @@ import {
   Button,
   Card,
   CardColumns,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
 // import apollo dependency
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from '@apollo/client';
 
 // import axios dependency
-import axios from "axios";
+import axios from 'axios';
 
 // import utils dependencies
-import { SAVE_POI } from "../utils/mutations";
-import { QUERY_KEY } from "../utils/queries";
-import { savePOIIds, getSavedPOIIds } from "../utils/localStorage";
-import Auth from "../utils/auth";
+import { SAVE_POI } from '../utils/mutations';
+import { QUERY_KEY } from '../utils/queries';
+import { savePOIIds, getSavedPOIIds } from '../utils/localStorage';
+import Auth from '../utils/auth';
 
 // API urls
 const getLocation =
-  "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry";
+  'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry';
 const getPOIs =
-  "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction";
+  'https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction';
 const getImgURL =
-  "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400";
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400';
 
+// search for POIs
 const SearchPOIs = () => {
-  // create state for holding returned google api data
+
+  // create state for holding returned API data
   const [searchedPOIs, setSearchedPOIs] = useState([]);
-
   // create state for holding input data
-  const [searchInput, setSearchInput] = useState("");
-
+  const [searchInput, setSearchInput] = useState('');
   // create state to hold saved POI Id values
   const [savedPOIIds, setSavedPOIIds] = useState([]);
-
-  //api key
-  const [key, setKey] = useState("");
-
-  //
-  const [POIs, setPOIs] = useState([]);
-
+  // create state to hold API key
+  const [key, setKey] = useState('');
+  // set query for getting API key
   const { loading, data } = useQuery(QUERY_KEY);
-  // set up useEffect hook to save `savedPoiIds` list to localStorage on component unmount
+  // set mutation for saving POI
+  const [savePOI] = useMutation(SAVE_POI);
+
+  // set up useEffect hook to save `savedPoiIds` list to localStorage
   useEffect(() => {
     return () => savePOIIds(savedPOIIds);
   });
@@ -56,32 +55,31 @@ const SearchPOIs = () => {
     !loading && setKey(data?.getKey);
   }, [loading]);
 
-  // set mutation for saving POI
-  const [savePOI] = useMutation(SAVE_POI);
-
   // create method to search for POIs and set state on form submit
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(key);
+
     if (!searchInput) {
       return false;
     }
 
     // use cached data if it exists
     if (localStorage.getItem(searchInput.toLowerCase().trim())) {
-      console.log("using cached data ---");
-      return setPOIs(
+      console.log('using cached data ---');
+      return setSearchedPOIs(
         JSON.parse(localStorage.getItem(searchInput.toLowerCase().trim()))
       );
     }
 
     // get data from API
     try {
-      console.log("searching using API --- ");
+      console.log('searching using API --- ');
+
+      // get location values from input
       axios
         .get(`${getLocation}&key=${key}&input=${searchInput}`)
         .then((res) => {
-          console.log("getLocation", res.data.candidates);
+          console.log('getLocation', res.data.candidates);
           const { lat, lng } = res.data.candidates[0].geometry.location;
           findPOIs(`${lat},${lng}`);
         })
@@ -89,11 +87,12 @@ const SearchPOIs = () => {
           console.log(err);
         });
 
+      // use location to get nearby POIs
       const findPOIs = (latlng) => {
         axios
           .get(`${getPOIs}&key=${key}&location=${latlng}`)
           .then(({ data }) => {
-            console.log("getPOIs", data);
+            console.log('getPOIs', data);
             getImgs(
               data.results.map((a) => a.photos?.[0].photo_reference),
               data.results
@@ -101,20 +100,23 @@ const SearchPOIs = () => {
           });
       };
 
-      const getImgs = async (refs, POIs) => {
+
+      const getImgs = async (refs, searchedPOIs) => {
         const urls = refs.map((ref) =>
           ref
             ? `${getImgURL}&key=${key}&photo_reference=${ref}`
-            : "https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg"
+            : 'https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg'
         );
-        const POI_Data = POIs.map((a, i) => {
+
+        const POI_Data = searchedPOIs.map((a, i) => {
           a.POI_id = a.place_id;
           a.url = urls[i];
           a.img = a.url;
           return a;
         });
+
         //store in state also store in localstorage for caching search results
-        setPOIs(POI_Data);
+        setSearchedPOIs(POI_Data);
         localStorage.setItem(
           searchInput.toLowerCase().trim(),
           JSON.stringify(POI_Data)
@@ -123,7 +125,7 @@ const SearchPOIs = () => {
 
       // const { POIs } = await response.json();
 
-      // const POIData = POIs.map((POI) => ({
+      // const POIData = searchedPOIs.map((POI) => ({
       //   POI_id: POI.POI_id,
       //   name: POI.name,
       //   img: POI.photos,
@@ -143,7 +145,6 @@ const SearchPOIs = () => {
   const handleSavePOI = async (POI_id) => {
     // find the poi in `searchedPOIs` state by the matching id
     const POIToSave = searchedPOIs.find((POI) => POI.POI_id === POI_id);
-
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -158,7 +159,7 @@ const SearchPOIs = () => {
       });
 
       if (!res.data) {
-        throw new Error("something went wrong!");
+        throw new Error('something went wrong!');
       }
 
       // if POI successfully saves to user's account, save POI id to state
@@ -170,23 +171,23 @@ const SearchPOIs = () => {
 
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
+      <Jumbotron fluid className='text-light bg-dark'>
         <Container>
           <h1>Search for places to go!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
-                  name="searchInput"
+                  name='searchInput'
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  type="text"
-                  size="lg"
-                  placeholder="Enter City Name"
+                  type='text'
+                  size='lg'
+                  placeholder='Enter City Name'
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
+                <Button type='submit' variant='success' size='lg'>
                   Search
                 </Button>
               </Col>
@@ -196,20 +197,15 @@ const SearchPOIs = () => {
       </Jumbotron>
 
       <Container>
-        <h2>
-          {POIs.length
-            ? `Viewing ${POIs.length} results:`
-            : "Search for a POI to begin"}
-        </h2>
         <CardColumns>
-          {POIs.map((POI) => {
+          {searchedPOIs.map((POI) => {
             return (
-              <Card key={POI.POI_id} border="dark">
+              <Card key={POI.POI_id} border='dark'>
                 {POI.img ? (
                   <Card.Img
                     src={POI.img}
                     alt={`The cover for ${POI.name}`}
-                    variant="top"
+                    variant='top'
                   />
                 ) : null}
                 <Card.Body>
@@ -221,14 +217,14 @@ const SearchPOIs = () => {
                       disabled={savedPOIIds?.some(
                         (savedPOIId) => savedPOIId === POI.POI_id
                       )}
-                      className="btn-block btn-info"
+                      className='btn-block btn-info'
                       onClick={() => handleSavePOI(POI.POI_id)}
                     >
                       {savedPOIIds?.some(
                         (savedPOIId) => savedPOIId === POI.POI_id
                       )
-                        ? "This point of interest has already been saved!"
-                        : "Save this point of interest!"}
+                        ? 'Saved to Collection'
+                        : 'Add to Collection'}
                     </Button>
                   )}
                 </Card.Body>

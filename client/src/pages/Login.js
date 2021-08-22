@@ -1,6 +1,6 @@
 // import react dependencies
 import React, { useState } from 'react';
-import { BrowserRouter, Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
 
 // import chakra dependencies
 import {
@@ -54,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <Flex
-      minH={'100vh'}
+      minH={'85vh'}
       align={'center'}
       justify={'center'}
       bg={'gray.50'}>
@@ -113,9 +113,7 @@ const LoginForm = () => {
                 Log In
               </Button>
               <Stack align={'start'}>
-                <BrowserRouter>
-                  <Link as={ReactLink} to={'/signup'} color={'blue.500'}>Sign Up</Link>
-                </BrowserRouter>
+                <Link as={ReactLink} to='/signup' color={'blue.500'}>Sign Up</Link>
               </Stack>
             </Stack>
           </form>
