@@ -25,27 +25,27 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN_USER);
 
   // handle form submit
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     try {
       const mutationResponse = await login({
         variables: { email: formData.email, password: formData.password },
       });
       const token = mutationResponse.data.login.token;
       Auth.login(token);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   // handle changes to input field
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
@@ -54,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <Flex
-      minH={'85vh'}
+      minH={'80vh'}
       align={'center'}
       justify={'center'}
       bg={'gray.50'}>
@@ -106,6 +106,7 @@ const LoginForm = () => {
             </Stack>
             <Stack spacing={3}>
               <Button
+                type='submit'
                 bg={'blue.500'}
                 color={'white'}
                 _hover={{ bg: 'blue.700' }}

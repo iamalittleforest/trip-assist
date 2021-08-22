@@ -27,18 +27,18 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const SignupForm = () => {
+const SignupForm = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [addUser, { error }] = useMutation(ADD_USER);
 
   // handle form submit
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     const mutationResponse = await addUser({
       variables: {
+        username: formData.username,
         email: formData.email,
-        password: formData.password,
-        username: formData.username
+        password: formData.password
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -46,8 +46,8 @@ const SignupForm = () => {
   }
 
   // handle changes to input field
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
@@ -56,7 +56,7 @@ const SignupForm = () => {
 
   return (
     <Flex
-      minH={'85vh'}
+      minH={'80vh'}
       align={'center'}
       justify={'center'}
       bg={'gray.50'}>
@@ -126,6 +126,7 @@ const SignupForm = () => {
             </Stack>
             <Stack spacing={3}>
               <Button
+                type='submit'
                 bg={'blue.500'}
                 color={'white'}
                 _hover={{ bg: 'blue.700' }}
