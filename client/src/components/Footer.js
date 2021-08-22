@@ -23,13 +23,15 @@ const Footer = () => {
         direction={{ base: 'column', md: 'row' }}
         spacing={4}
         justify={{ base: 'center', md: 'space-between' }}
-        align={{ base: 'center', md: 'center' }}>
+        align={{ base: 'center', md: 'center' }}
+      >
         <Text>© 2021 Trip Assist.</Text>
-        <Stack direction={'row'} spacing={6}>
+        <Stack direction={'row'} spacing={5}>
           <Button
+            as='a'
+            href={'https://github.com/iamalittleforest/project-3-trip-assist'}
             colorScheme='github'
             leftIcon={<FaGithub />}
-          // onClick={}
           >
             GitHub
           </Button>
