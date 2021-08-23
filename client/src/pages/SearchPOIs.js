@@ -1,11 +1,5 @@
 // import react dependencies
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Button as Btn,
-  Card,
-  CardColumns,
-} from 'react-bootstrap';
 
 // import chakra dependencies
 import {
@@ -28,10 +22,13 @@ import { useMutation, useQuery } from '@apollo/client';
 import axios from 'axios';
 
 // import utils dependencies
-import { SAVE_POI } from '../utils/mutations';
 import { QUERY_KEY } from '../utils/queries';
+import { SAVE_POI } from '../utils/mutations';
 import { savePOIIds, getSavedPOIIds } from '../utils/localStorage';
 import Auth from '../utils/auth';
+
+// import component
+import POICard from '../components/POICard';
 
 // API urls
 const getLocation =
@@ -133,7 +130,7 @@ const SearchPOIs = () => {
       name: POI.name,
       img: imgUrls[i],
       business_status: POI.business_status,
-      rating: POI.rating,
+      rating: POI.rating
     }));
 
     // save POI data to localStorage
@@ -179,10 +176,10 @@ const SearchPOIs = () => {
   return (
     <>
       <Flex
-        minH={'35vh'}
+        minH={'40vh'}
         align={'center'}
         justify={'center'}
-        bg={'gray.50'}>
+        bg={'gray.100'}>
         <Stack spacing={5} mx={'auto'} maxW={'lg'}>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Where should we go?</Heading>
@@ -224,43 +221,13 @@ const SearchPOIs = () => {
         </Stack>
       </Flex>
 
-      <Container>
-        <CardColumns>
-          {searchedPOIs.map((POI) => {
-            return (
-              <Card key={POI.POI_id} border='dark'>
-                {POI.img ? (
-                  <Card.Img
-                    src={POI.img}
-                    alt={`The cover for ${POI.name}`}
-                    variant='top'
-                  />
-                ) : null}
-                <Card.Body>
-                  <Card.Title>{POI.name}</Card.Title>
-                  <Card.Text>Status: {POI.business_status}</Card.Text>
-                  <Card.Text>Rating: {POI.rating}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Btn
-                      disabled={savedPOIIds?.some(
-                        (savedPOIId) => savedPOIId === POI.POI_id
-                      )}
-                      className='btn-block btn-info'
-                      onClick={() => handleSavePOI(POI.POI_id)}
-                    >
-                      {savedPOIIds?.some(
-                        (savedPOIId) => savedPOIId === POI.POI_id
-                      )
-                        ? 'Saved to Collection'
-                        : 'Add to Collection'}
-                    </Btn>
-                  )}
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-      </Container>
+      <Box bg={'gray.100'}>
+        {searchedPOIs.map((POI) => {
+          return (
+            <POICard key={POI.POI_id} isLoggedIn={Auth.loggedIn()} {...{ ...POI, savedPOIIds, handleSavePOI }}/>
+          );
+        })}
+      </Box>
     </>
   );
 };

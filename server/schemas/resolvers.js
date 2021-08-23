@@ -1,14 +1,13 @@
 // import dependencies
-const { AuthenticationError } = require("apollo-server-express");
-const { User } = require("../models");
-const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require('apollo-server-express');
+const { User } = require('../models');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     // get logged in user info
     me: async (parent, args, context) => {
       const key = process.env.API_KEY;
-      console.log(key);
       // user is logged in
       if (context.user) {
         try {
@@ -16,11 +15,11 @@ const resolvers = {
           const user = await User.findOne({ _id: context.user._id });
           return user;
         } catch (err) {
-          console.log("Unable to find user data", err);
+          console.log('Unable to find user data', err);
         }
       }
       // user is not logged in
-      throw new AuthenticationError("Please log in");
+      throw new AuthenticationError('Please log in');
     },
 
     //query to get api key, make sure to check auth status first
@@ -38,19 +37,19 @@ const resolvers = {
         const user = await User.findOne({ email });
         if (!user) {
           throw new AuthenticationError(
-            "No user associated with this email address"
+            'No user associated with this email address'
           );
         }
         // check if password is correct
         const correctPw = await user.isCorrectPassword(password);
         if (!correctPw) {
-          throw new AuthenticationError("Incorrect password");
+          throw new AuthenticationError('Incorrect password');
         }
         // create token from user and return both
         const token = signToken(user);
         return { token, user };
       } catch (err) {
-        console.log("Login error", err);
+        console.log('Login error', err);
       }
     },
 
@@ -63,7 +62,7 @@ const resolvers = {
         const token = signToken(user);
         return { token, user };
       } catch (err) {
-        console.log("Sign up error", err);
+        console.log('Sign up error', err);
       }
     },
 
@@ -81,7 +80,7 @@ const resolvers = {
           //return updated user
           return user;
         } catch (err) {
-          console.log("Saved POI error", err);
+          console.log('Saved POI error', err);
         }
       }
     },
@@ -100,11 +99,11 @@ const resolvers = {
           //return updated POI
           return user;
         } catch (err) {
-          console.log("Remove POI error", err);
+          console.log('Remove POI error', err);
         }
       }
       // user is not logged in
-      throw new AuthenticationError("Please log in");
+      throw new AuthenticationError('Please log in');
     },
   },
 };
