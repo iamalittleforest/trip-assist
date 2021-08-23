@@ -130,7 +130,8 @@ const SearchPOIs = () => {
       name: POI.name,
       img: imgUrls[i],
       business_status: POI.business_status,
-      rating: POI.rating
+      rating: POI.rating,
+      types: POI.types
     }));
 
     // save POI data to localStorage

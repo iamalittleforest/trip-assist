@@ -59,7 +59,7 @@ const SignupForm = (props) => {
       minH={'80vh'}
       align={'center'}
       justify={'center'}
-      bg={'gray.50'}>
+      bg={'gray.100'}>
       <Stack spacing={5} mx={'auto'} maxW={'lg'}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign Up</Heading>

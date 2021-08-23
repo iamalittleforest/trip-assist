@@ -43,6 +43,7 @@ export const SAVE_POI = gql`
         business_status
         rating
         vicinity
+        types
       }
     }
   }
@@ -62,6 +63,7 @@ export const REMOVE_POI = gql`
         business_status
         rating
         vicinity
+        types
       }
     }
   }
