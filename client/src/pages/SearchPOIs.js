@@ -1,14 +1,25 @@
 // import react dependencies
 import React, { useState, useEffect } from 'react';
 import {
-  Jumbotron,
   Container,
-  Col,
-  Form,
-  Button,
+  Button as Btn,
   Card,
   CardColumns,
 } from 'react-bootstrap';
+
+// import chakra dependencies
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Stack
+} from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons'
 
 // import apollo dependency
 import { useMutation, useQuery } from '@apollo/client';
@@ -67,7 +78,7 @@ const SearchPOIs = () => {
     // use cached data if it exists
     if (localStorage.getItem(searchInput.toLowerCase().trim())) {
       console.log('using cached data ---');
-      
+
       return setSearchedPOIs(
         JSON.parse(localStorage.getItem(searchInput.toLowerCase().trim()))
       );
@@ -167,30 +178,51 @@ const SearchPOIs = () => {
 
   return (
     <>
-      <Jumbotron fluid className='text-light bg-dark'>
-        <Container>
-          <h1>Where do you want to go?</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Enter City Name'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
+      <Flex
+        minH={'35vh'}
+        align={'center'}
+        justify={'center'}
+        bg={'gray.50'}>
+        <Stack spacing={5} mx={'auto'} maxW={'lg'}>
+          <Stack align={'center'}>
+            <Heading fontSize={'4xl'}>Where should we go?</Heading>
+          </Stack>
+          <Box
+            rounded={'lg'}
+            bg={'white'}
+            boxShadow={'lg'}
+            p={8}>
+            <form onSubmit={handleFormSubmit}>
+              <Stack mb={5}>
+                <FormControl id='password' isRequired>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents='none'
+                      children={<SearchIcon color='gray.300' />}
+                    />
+                    <Input
+                      placeholder='Enter City Name'
+                      name='searchInput'
+                      onChange={(e) => setSearchInput(e.target.value)}
+                      value={searchInput}
+                    />
+                  </InputGroup>
+                </FormControl>
+              </Stack>
+              <Stack spacing={3}>
+                <Button
+                  type='submit'
+                  bg={'blue.500'}
+                  color={'white'}
+                  _hover={{ bg: 'blue.700' }}
+                >
                   Search
                 </Button>
-              </Col>
-            </Form.Row>
-          </Form>
-        </Container>
-      </Jumbotron>
+              </Stack>
+            </form>
+          </Box>
+        </Stack>
+      </Flex>
 
       <Container>
         <CardColumns>
@@ -209,7 +241,7 @@ const SearchPOIs = () => {
                   <Card.Text>Status: {POI.business_status}</Card.Text>
                   <Card.Text>Rating: {POI.rating}</Card.Text>
                   {Auth.loggedIn() && (
-                    <Button
+                    <Btn
                       disabled={savedPOIIds?.some(
                         (savedPOIId) => savedPOIId === POI.POI_id
                       )}
@@ -221,7 +253,7 @@ const SearchPOIs = () => {
                       )
                         ? 'Saved to Collection'
                         : 'Add to Collection'}
-                    </Button>
+                    </Btn>
                   )}
                 </Card.Body>
               </Card>
