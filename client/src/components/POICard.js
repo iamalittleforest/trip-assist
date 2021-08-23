@@ -4,6 +4,7 @@ import React from 'react';
 // import chakra dependency
 import {
   Box,
+  Button,
   Center,
   Heading,
   Image,
@@ -11,11 +12,11 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
-export const POICard = ({ name, img, business_status, rating }) => {
+const POICard = ({ name, img, business_status, rating, isLoggedIn, POI_id, savedPOIIds, handleSavePOI }) => {
   return (
-    <Center py={6}>
+    <Center px={5} py={5}>
       <Box
-        maxW={'445px'}
+        maxW={'400px'}
         w={'full'}
         bg={'white'}
         boxShadow={'2xl'}
@@ -24,47 +25,48 @@ export const POICard = ({ name, img, business_status, rating }) => {
         overflow={'hidden'}
       >
         <Box
-          h={'210px'}
-          bg={'gray.100'}
+          h={'250px'}
           mt={-6}
           mx={-6}
           mb={6}
-          pos={'relative'}
           overflow={'hidden'}
-          boxSize='sm'
         >
           <Image
-            boxSize='200px'
             src={img}
-            layout={'objectFit'}
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
           />
         </Box>
         <Stack>
-          <Heading
-            color={'black'}
-            fontSize={'2xl'}
-            fontFamily={'body'}
-          >
-            {name}
-          </Heading>
-          <Text color={'black'}>Status: {business_status}</Text>
-          <Text color={'black'}>Rating: {rating}</Text>
-          {/* {Auth.loggedIn() && (
-            <Button
-              disabled={savedPOIIds?.some(
-                (savedPOIId) => savedPOIId === POI.POI_id
-              )}
-              className='btn-block btn-info'
-              onClick={() => handleSavePOI(POI.POI_id)}
+          <Stack mb={3}>
+            <Heading
+              color={'black'}
+              fontSize={'2xl'}
+              fontFamily={'body'}
             >
-              {savedPOIIds?.some(
-                (savedPOIId) => savedPOIId === POI.POI_id
-              )
-                ? 'Saved to Collection'
-                : 'Add to Collection'}
-            </Button>
-          )} */}
+              {name}
+            </Heading>
+            <Text color={'black'}>Status: {business_status}</Text>
+            <Text color={'black'}>Rating: {rating}</Text>
+          </Stack>
+          <Stack>
+            {isLoggedIn && (
+              <Button
+                bg={'blue.500'}
+                color={'white'}
+                _hover={{ bg: 'blue.700' }}
+                disabled={savedPOIIds?.some(
+                  (savedPOIId) => savedPOIId === POI_id
+                )}
+                onClick={() => handleSavePOI(POI_id)}
+              >
+                {savedPOIIds?.some(
+                  (savedPOIId) => savedPOIId === POI_id
+                )
+                  ? 'Saved to Collection'
+                  : 'Add to Collection'}
+              </Button>
+            )}
+          </Stack>
         </Stack>
       </Box>
     </Center>
