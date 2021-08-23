@@ -30,6 +30,7 @@ const typeDefs = gql`
     business_status: String
     rating: Float
     vicinity: String
+    types: [String]
   }
 
   type Auth {
@@ -44,6 +45,7 @@ const typeDefs = gql`
     business_status: String
     rating: Float
     vicinity: String
+    types: [String]
   }
 `;
 

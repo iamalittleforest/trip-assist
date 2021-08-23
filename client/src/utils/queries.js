@@ -15,6 +15,7 @@ export const QUERY_ME = gql`
         business_status
         rating
         vicinity
+        types
       }
     }
   }
