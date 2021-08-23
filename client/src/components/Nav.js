@@ -7,6 +7,7 @@ import Auth from '../utils/auth';
 // import chakra dependencies 
 import {
   Box,
+  Container,
   Flex,
   Link,
   Stack,
@@ -26,8 +27,8 @@ const Nav = (props) => {
         w='100px'
         color={'white'}
       />
-      <MenuToggle toggle={toggle} isOpen={isOpen} />
-      <MenuLinks isOpen={isOpen} />
+      <NavToggle toggle={toggle} isOpen={isOpen} />
+      <NavLinks isOpen={isOpen} />
     </NavBarContainer>
   );
 };
@@ -42,27 +43,27 @@ const CloseIcon = () => (
   </svg>
 );
 
-const MenuIcon = () => (
+const NavIcon = () => (
   <svg
     width='24px'
     viewBox='0 0 20 20'
     xmlns='http://www.w3.org/2000/svg'
     fill='white'
   >
-    <title>Menu</title>
+    <title>Nav</title>
     <path d='M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z' />
   </svg>
 );
 
-const MenuToggle = ({ toggle, isOpen }) => {
+const NavToggle = ({ toggle, isOpen }) => {
   return (
     <Box display={{ base: 'block', md: 'none' }} onClick={toggle}>
-      {isOpen ? <CloseIcon /> : <MenuIcon />}
+      {isOpen ? <CloseIcon /> : <NavIcon />}
     </Box>
   );
 };
 
-const MenuItem = ({ children, isLast, to = '/', ...rest }) => {
+const NavItem = ({ children, isLast, to = '/', ...rest }) => {
   return (
     <Link href={to}>
       <Text display='block' {...rest}>
@@ -72,29 +73,29 @@ const MenuItem = ({ children, isLast, to = '/', ...rest }) => {
   );
 };
 
-const MenuLinks = ({ isOpen }) => {
+const NavLinks = ({ isOpen }) => {
   return (
     <Box
       display={{ base: isOpen ? 'block' : 'none', md: 'block' }}
       flexBasis={{ base: '100%', md: 'auto' }}
     >
       <Stack
-        spacing={5}
+        spacing={10}
         align='center'
         justify={['center', 'space-between', 'flex-end', 'flex-end']}
         direction={['column', 'row', 'row', 'row']}
         pt={[4, 4, 0, 0]}
       >
-        <MenuItem to='/'>Home</MenuItem>
+        <NavItem to='/'>Home</NavItem>
         {Auth.loggedIn() ? (
           <>
-            <MenuItem to='/savedPOIs'>Collection</MenuItem>
-            <MenuItem onClick={Auth.logout}>Log Out</MenuItem>
+            <NavItem to='/savedPOIs'>Collection</NavItem>
+            <NavItem onClick={Auth.logout}>Log Out</NavItem>
           </>
         ) : (
           <>
-            <MenuItem to='/login'>Log In</MenuItem>
-            <MenuItem to='/signup' isLast>Sign Up</MenuItem>
+            <NavItem to='/login'>Log In</NavItem>
+            <NavItem to='/signup' isLast>Sign Up</NavItem>
           </>
         )}
       </Stack>
@@ -104,19 +105,27 @@ const MenuLinks = ({ isOpen }) => {
 
 const NavBarContainer = ({ children, ...props }) => {
   return (
-    <Flex
-      as='nav'
-      align='center'
-      justify='space-between'
-      wrap='wrap'
-      w='100%'
-      p={5}
-      bg={'blue.700'}
-      color={'white'}
-      {...props}
-    >
-      {children}
-    </Flex>
+    <Box bg={'blue.700'}>
+      <Container
+        as={Stack}
+        maxW={'6xl'}
+        px={0}
+      >
+        <Flex
+          as='nav'
+          align='center'
+          justify='space-between'
+          wrap='wrap'
+          w='100%'
+          p={5}
+          bg={'blue.700'}
+          color={'white'}
+          {...props}
+        >
+          {children}
+        </Flex>
+      </Container>
+    </Box>
   );
 };
 
