@@ -12,7 +12,10 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
-const POICard = ({ name, img, business_status, rating, isLoggedIn, POI_id, savedPOIIds, handleSavePOI }) => {
+// import component
+import TypeBadge from './TypeBadge';
+
+const POICard = ({ name, img, business_status, rating, types = [], isLoggedIn, POI_id, savedPOIIds, handleSavePOI }) => {
   return (
     <Center px={5} py={5}>
       <Box
@@ -37,7 +40,7 @@ const POICard = ({ name, img, business_status, rating, isLoggedIn, POI_id, saved
           />
         </Box>
         <Stack>
-          <Stack mb={3}>
+          <Stack mb={2}>
             <Heading
               color={'black'}
               fontSize={'2xl'}
@@ -45,6 +48,9 @@ const POICard = ({ name, img, business_status, rating, isLoggedIn, POI_id, saved
             >
               {name}
             </Heading>
+            <Stack direction='row' wrap='wrap'>
+              {types.map((type) => <TypeBadge key={type} color={'random'} text={type} />)}
+            </Stack>
             <Text color={'black'}>Status: {business_status}</Text>
             <Text color={'black'}>Rating: {rating}</Text>
           </Stack>
