@@ -1,25 +1,24 @@
 // import react dependency
-import React from "react";
+import React from 'react';
 
 // import chakra dependency
 import {
-  Box,
   Flex,
   Heading,
   Stack
 } from '@chakra-ui/react';
 
 // import apollo dependency
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from '@apollo/client';
 
 // import utils dependencies
-import { QUERY_ME } from "../utils/queries";
-import { REMOVE_POI } from "../utils/mutations";
-import { removePOIId } from "../utils/localStorage";
-import Auth from "../utils/auth";
+import { QUERY_ME } from '../utils/queries';
+import { REMOVE_POI } from '../utils/mutations';
+import { removePOIId } from '../utils/localStorage';
+import Auth from '../utils/auth';
 
 // import component
-import POICard from "../components/POICard";
+import POICard from '../components/POICard';
 
 const SavedPOIs = () => {
   // set query for pulling data
@@ -44,7 +43,7 @@ const SavedPOIs = () => {
       });
 
       if (!response.data) {
-        throw new Error("something went wrong!");
+        throw new Error('something went wrong!');
       }
 
       // remove POI from localStorage
@@ -71,14 +70,18 @@ const SavedPOIs = () => {
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>
               {userData.savedPOIs.length
-                ? "Viewing Your Collection"
-                : "Add to Your Collection!"}
+                ? 'Viewing Your Collection'
+                : 'Add to Your Collection!'}
             </Heading>
           </Stack>
         </Stack>
       </Flex>
 
-      <Box bg={'gray.100'}>
+      <Flex
+        bg={'gray.100'}
+        flexWrap={'wrap'}
+        justifyContent={'center'}
+      >
         {userData.savedPOIs.map((POI) => {
           console.log(POI);
           return (
@@ -90,7 +93,7 @@ const SavedPOIs = () => {
             />
           );
         })}
-      </Box>
+      </Flex>
     </>
   );
 };

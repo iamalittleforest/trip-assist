@@ -11,9 +11,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Stack,
-  Grid,
-  GridItem
+  Stack
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons'
 
@@ -185,7 +183,8 @@ const SearchPOIs = () => {
         minH={'40vh'}
         align={'center'}
         justify={'center'}
-        bg={'gray.100'}>
+        bg={'gray.100'}
+      >
         <Stack spacing={5} mx={'auto'} maxW={'lg'}>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Where should we go?</Heading>
@@ -227,7 +226,11 @@ const SearchPOIs = () => {
         </Stack>
       </Flex>
 
-      <Box bg={'gray.100'}>
+      <Flex
+        bg={'gray.100'}
+        flexWrap={'wrap'}
+        justifyContent={'center'}
+      >
         {searchedPOIs.map((POI) => {
           return (
             <POICard
@@ -239,7 +242,7 @@ const SearchPOIs = () => {
             />
           );
         })}
-      </Box>
+      </Flex>
     </>
   );
 };
