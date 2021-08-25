@@ -1,17 +1,24 @@
-// import dependencies
+// import react dependency
 import React from "react";
+
+// import chakra dependency
 import {
-  Jumbotron,
-  Container,
-  CardColumns,
-  Card,
-  Button,
-} from "react-bootstrap";
+  Box,
+  Flex,
+  Heading,
+  Stack
+} from '@chakra-ui/react';
+
+// import apollo dependency
 import { useQuery, useMutation } from "@apollo/client";
+
+// import utils dependencies
 import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POI } from "../utils/mutations";
 import { removePOIId } from "../utils/localStorage";
 import Auth from "../utils/auth";
+
+// import component
 import POICard from "../components/POICard";
 
 const SavedPOIs = () => {
@@ -22,7 +29,7 @@ const SavedPOIs = () => {
   // set mutation for removing POI
   const [removePOI] = useMutation(REMOVE_POI);
 
-  // create function that accepts the POI's mongo _id value as param and deletes the POI from the database
+  // create function to handle deleting a POI
   const handleDeletePOI = async (POI_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -40,7 +47,7 @@ const SavedPOIs = () => {
         throw new Error("something went wrong!");
       }
 
-      // upon success, remove POI's id from localStorage
+      // remove POI from localStorage
       removePOIId(POI_id);
     } catch (err) {
       console.error(err);
@@ -54,36 +61,36 @@ const SavedPOIs = () => {
 
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
-        <Container>
-          {/* Might need to change title later */}
-          <h1>Viewing saved POIs!</h1>
-        </Container>
-      </Jumbotron>
-      <Container>
-        <h2>
-          {userData.savedPOIs.length
-            ? `Viewing ${userData.savedPOIs.length} saved ${
-                userData.savedPOIs.length === 1 ? "POI" : "POIs"
-              }:`
-            : "You have no saved POI!"}
-        </h2>
-        <CardColumns>
-          {userData.savedPOIs.map((POI) => {
-            console.log(POI);
-            return (
-           
-             
-              <POICard
-                {...POI}
-                key={POI.POI_id}
-                isSaved={true}
-                handleDelete={handleDeletePOI}
-              />
-            );
-          })}
-        </CardColumns>
-      </Container>
+      <Flex
+        direction={'row'}
+        minH={'15vh'}
+        align={'center'}
+        justify={'center'}
+        bg={'gray.100'}>
+        <Stack spacing={5} mx={'auto'} maxW={'lg'}>
+          <Stack align={'center'}>
+            <Heading fontSize={'4xl'}>
+              {userData.savedPOIs.length
+                ? "Viewing Your Collection"
+                : "Add to Your Collection!"}
+            </Heading>
+          </Stack>
+        </Stack>
+      </Flex>
+
+      <Box bg={'gray.100'}>
+        {userData.savedPOIs.map((POI) => {
+          console.log(POI);
+          return (
+            <POICard
+              {...POI}
+              key={POI.POI_id}
+              isSaved={true}
+              handleDelete={handleDeletePOI}
+            />
+          );
+        })}
+      </Box>
     </>
   );
 };

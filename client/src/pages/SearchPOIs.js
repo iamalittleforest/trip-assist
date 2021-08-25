@@ -148,7 +148,7 @@ const SearchPOIs = () => {
     setSearchInput('');
   };
 
-  // create function to handle saving a POI to our database
+  // create function to handle saving a POI
   const handleSavePOI = async (POI_id) => {
     // find the poi in `searchedPOIs` state by the matching id
     const POIToSave = searchedPOIs.find((POI) => POI.POI_id === POI_id);
@@ -181,7 +181,7 @@ const SearchPOIs = () => {
   return (
     <>
       <Flex
-        direction= {'row'}
+        direction={'row'}
         minH={'40vh'}
         align={'center'}
         justify={'center'}
@@ -230,7 +230,13 @@ const SearchPOIs = () => {
       <Box bg={'gray.100'}>
         {searchedPOIs.map((POI) => {
           return (
-            <POICard key={POI.POI_id} isLoggedIn={Auth.loggedIn()} {...{ ...POI, savedPOIIds, handleSavePOI }}/>
+            <POICard
+              {...POI}
+              key={POI.POI_id}
+              isLoggedIn={Auth.loggedIn()}
+              handleSave={handleSavePOI}
+              savedPOIIds={savedPOIIds}
+            />
           );
         })}
       </Box>
