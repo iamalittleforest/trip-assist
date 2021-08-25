@@ -1,5 +1,5 @@
 // import dependency
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // define mutation for logging in
 export const LOGIN_USER = gql`
@@ -42,7 +42,6 @@ export const SAVE_POI = gql`
         img
         business_status
         rating
-        vicinity
         types
       }
     }
@@ -62,7 +61,6 @@ export const REMOVE_POI = gql`
         img
         business_status
         rating
-        vicinity
         types
       }
     }

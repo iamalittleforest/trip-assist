@@ -1,5 +1,5 @@
 // import dependency
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 // define object types
 const typeDefs = gql`
@@ -29,7 +29,6 @@ const typeDefs = gql`
     img: String
     business_status: String
     rating: Float
-    vicinity: String
     types: [String]
   }
 
@@ -44,7 +43,6 @@ const typeDefs = gql`
     img: String
     business_status: String
     rating: Float
-    vicinity: String
     types: [String]
   }
 `;
