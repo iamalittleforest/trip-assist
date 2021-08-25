@@ -21,7 +21,9 @@ const POISchema = new Schema({
   vicinity: {
     type: String,
   },
-  types: [String]
+  types: {
+    type: [String],
+  }
 });
 
 module.exports = POISchema;
