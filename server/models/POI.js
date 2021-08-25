@@ -18,9 +18,6 @@ const POISchema = new Schema({
   rating: {
     type: Number,
   },
-  vicinity: {
-    type: String,
-  },
   types: {
     type: [String],
   }

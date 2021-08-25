@@ -1,5 +1,5 @@
 // import dependency
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // define query
 export const QUERY_ME = gql`
@@ -14,7 +14,6 @@ export const QUERY_ME = gql`
         img
         business_status
         rating
-        vicinity
         types
       }
     }
