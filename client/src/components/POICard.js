@@ -24,13 +24,12 @@ const POICard = ({
   isLoggedIn,
   POI_id,
   savedPOIIds,
-  handleSavePOI,
+  handleSave,
   isSaved,
   handleDelete,
 }) => {
   return (
     <Center px={5} py={5}>
-      
       <Box
         maxW={"400px"}
         w={"full"}
@@ -62,13 +61,13 @@ const POICard = ({
           <Stack>
             {isLoggedIn && !isSaved ? (
               <Button
-                bg={"blue.500"}
+                bg={"green.500"}
                 color={"white"}
-                _hover={{ bg: "blue.700" }}
+                _hover={{ bg: "green.700" }}
                 disabled={savedPOIIds?.some(
                   (savedPOIId) => savedPOIId === POI_id
                 )}
-                onClick={() => handleSavePOI(POI_id)}
+                onClick={() => handleSave(POI_id)}
               >
                 {savedPOIIds?.some((savedPOIId) => savedPOIId === POI_id)
                   ? "Saved to Collection"
@@ -76,10 +75,9 @@ const POICard = ({
               </Button>
             ) : (
               <Button
-                g={"blue.500"}
+                bg={"red.500"}
                 color={"white"}
-                  _hover={{ bg: "blue.700" }}
-                className="btn-block btn-danger"
+                _hover={{ bg: "red.700" }}
                 onClick={() => handleDelete(POI_id)}
               >
                 Remove from Collection

@@ -65,7 +65,10 @@ const NavToggle = ({ toggle, isOpen }) => {
 
 const NavItem = ({ children, isLast, to = '/', ...rest }) => {
   return (
-    <Link href={to}>
+    <Link
+      href={to}
+      _hover={{ color: 'gray.400' }}
+    >
       <Text display='block' {...rest}>
         {children}
       </Text>

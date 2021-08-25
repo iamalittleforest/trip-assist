@@ -32,6 +32,7 @@ const Footer = () => {
             href={'https://github.com/iamalittleforest/project-3-trip-assist'}
             colorScheme='github'
             leftIcon={<FaGithub />}
+            _hover={{ color: 'gray.400' }}
           >
             GitHub
           </Button>
