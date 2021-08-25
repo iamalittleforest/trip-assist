@@ -12,6 +12,7 @@ import { QUERY_ME } from "../utils/queries";
 import { REMOVE_POI } from "../utils/mutations";
 import { removePOIId } from "../utils/localStorage";
 import Auth from "../utils/auth";
+import POICard from "../components/POICard";
 
 const SavedPOIs = () => {
   // set query for pulling data
@@ -69,32 +70,16 @@ const SavedPOIs = () => {
         </h2>
         <CardColumns>
           {userData.savedPOIs.map((POI) => {
+            console.log(POI);
             return (
-              <Card key={POI.POI_id} border="dark">
-                {POI.img ? (
-                  <Card.Img
-                    src={POI.img}
-                    alt={`The cover for ${POI.name}`}
-                    variant="top"
-                  />
-                ) : null}
-                <Card.Body>
-                  <Card.Title>{POI.name}</Card.Title>
-                  <p className="small">Vicinity: {POI.vicinity}</p>
-                  {/* instead of description use rating? */}
-                  <p className="small">
-                    Business Status: {POI.business_status}
-                  </p>
-                  <Card.Text> Rating: {POI.rating}</Card.Text>
-                  <Button
-                    className="btn-block btn-danger"
-                    onClick={() => handleDeletePOI(POI.POI_id)}
-                  >
-                    {/* Might have to change line below later  */}
-                    Delete this POI!
-                  </Button>
-                </Card.Body>
-              </Card>
+           
+             
+              <POICard
+                {...POI}
+                key={POI.POI_id}
+                isSaved={true}
+                handleDelete={handleDeletePOI}
+              />
             );
           })}
         </CardColumns>
