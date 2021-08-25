@@ -11,7 +11,9 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Stack
+  Stack,
+  Grid,
+  GridItem
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons'
 
@@ -150,6 +152,8 @@ const SearchPOIs = () => {
   const handleSavePOI = async (POI_id) => {
     // find the poi in `searchedPOIs` state by the matching id
     const POIToSave = searchedPOIs.find((POI) => POI.POI_id === POI_id);
+
+    console.log(POIToSave)
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -177,6 +181,7 @@ const SearchPOIs = () => {
   return (
     <>
       <Flex
+        direction= {'row'}
         minH={'40vh'}
         align={'center'}
         justify={'center'}
