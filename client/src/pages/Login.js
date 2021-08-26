@@ -14,8 +14,8 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
-  Stack
-} from '@chakra-ui/react';
+  Stack,
+} from "@chakra-ui/react";
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
 // import apollo dependency
@@ -24,6 +24,7 @@ import { useMutation } from '@apollo/client';
 // import utils dependencies
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import Error from '../components/Error';
 
 const LoginForm = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -40,6 +41,7 @@ const LoginForm = (props) => {
       Auth.login(token);
     } catch (err) {
       console.log(err);
+      window.alert("Please provide the correct username and password");
     }
   };
 
@@ -101,6 +103,10 @@ const LoginForm = (props) => {
                     onChange={handleChange}
                     value={formData.password}
                   />
+                  {/* still going to work on until thursday */}
+                  {/* {error ? (
+                    <Error/>
+                  ): null} */}
                 </InputGroup>
               </FormControl>
             </Stack>
