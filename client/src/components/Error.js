@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link as ReactLink } from "react-router-dom";
 
-
+// import chakra dependency
 import {
   Button,
   AlertDialog,
@@ -12,6 +12,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
+
 function AlertDialogExample() {
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
