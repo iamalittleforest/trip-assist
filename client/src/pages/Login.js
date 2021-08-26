@@ -15,8 +15,6 @@ import {
   InputLeftElement,
   Link,
   Stack,
-  
-
 } from "@chakra-ui/react";
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 
@@ -43,8 +41,7 @@ const LoginForm = (props) => {
       Auth.login(token);
     } catch (err) {
       console.log(err);
-      
- window.alert("Please provide the correct username and password")
+      window.alert("Please provide the correct username and password");
     }
   };
 
