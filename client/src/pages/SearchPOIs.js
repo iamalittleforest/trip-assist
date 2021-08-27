@@ -22,9 +22,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import axios from 'axios';
 
 // import utils dependencies
-import { QUERY_KEY } from '../utils/queries';
+import { QUERY_KEY, QUERY_ME } from '../utils/queries';
 import { SAVE_POI } from '../utils/mutations';
-import { savePOIIds, getSavedPOIIds } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 // import component
@@ -46,23 +45,24 @@ const SearchPOIs = () => {
   // create state for holding input data
   const [searchInput, setSearchInput] = useState('');
   // create state to hold saved POI Id values
-  const [savedPOIIds, setSavedPOIIds] = useState(getSavedPOIIds());
+  const [savedPOIIds, setSavedPOIIds] = useState([]);
   // create state to hold API key
   const [key, setKey] = useState('');
   // set query for getting API key
   const { loading, data } = useQuery(QUERY_KEY);
+  const { loading:loadingMe, data:dataMe } = useQuery(QUERY_ME);
   // set mutation for saving POI
   const [savePOI] = useMutation(SAVE_POI);
-
-  // set up useEffect hook to save `savedPoiIds` list to localStorage
-  useEffect(() => {
-    return () => savePOIIds(savedPOIIds);
-  });
 
   // set up useEffect hook to getKey
   useEffect(() => {
     !loading && setKey(data?.getKey);
   }, [loading]);
+
+  // set up useEffect hook to get saved POI Ids
+  useEffect(()=> {
+    !loadingMe && dataMe?.me && setSavedPOIIds(dataMe.me.savedPOIs.map(a=> a.POI_id));
+  }, [loadingMe])
 
   // create method to search for POIs and set state on form submit
   const handleFormSubmit = async (e) => {
