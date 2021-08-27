@@ -89,6 +89,7 @@ const SavedPOIs = () => {
               {...POI}
               key={POI.POI_id}
               isSaved={true}
+              isLoggedIn={true}
               handleDelete={handleDeletePOI}
             />
           );

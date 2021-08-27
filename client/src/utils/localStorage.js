@@ -1,19 +1,3 @@
-export const getSavedPOIIds = () => {
-  const savedPOIIds = localStorage.getItem('saved_POIs')
-    ? JSON.parse(localStorage.getItem('saved_POIs'))
-    : [];
-
-  return savedPOIIds;
-};
-
-export const savePOIIds = (POIIdArr) => {
-  if (POIIdArr.length) {
-    localStorage.setItem('saved_POIs', JSON.stringify(POIIdArr));
-  } else {
-    localStorage.removeItem('saved_POIs');
-  }
-};
-
 export const removePOIId = (POIId) => {
   const savedPOIIds = localStorage.getItem('saved_POIs')
     ? JSON.parse(localStorage.getItem('saved_POIs'))
