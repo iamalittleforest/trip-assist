@@ -15,20 +15,22 @@ import {
   InputLeftElement,
   Link,
   Stack,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
-import Swal from "sweetalert2";
+
 // import apollo dependency
 import { useMutation } from '@apollo/client';
 
 // import utils dependencies
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-// import Error from '../components/Error';
+
+// import sweetalert dependency
+import Swal from 'sweetalert2';
 
 const LoginForm = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [login] = useMutation(LOGIN_USER);
 
   // handle form submit
   const handleFormSubmit = async (e) => {
@@ -42,13 +44,11 @@ const LoginForm = (props) => {
     } catch (err) {
       console.log(err);
       Swal.fire({
-        title: "Incorrect user name and/or password!",
-        text: "If you do not have an account please sign up.",
-        icon: "error",
-        
-        confirmButtonText: "Close",
+        title: 'Incorrect user name and/or password!',
+        text: 'If you do not have an account, please sign up.',
+        icon: 'error',
+        confirmButtonText: 'Close',
       });
-      // window.alert("Please provide the correct username and password");
     }
   };
 
@@ -110,10 +110,6 @@ const LoginForm = (props) => {
                     onChange={handleChange}
                     value={formData.password}
                   />
-                  {/* still going to work on until thursday */}
-                  {/* {error ? (
-                    <Error/>
-                  ): null} */}
                 </InputGroup>
               </FormControl>
             </Stack>

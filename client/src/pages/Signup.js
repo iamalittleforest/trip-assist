@@ -29,7 +29,7 @@ import Auth from '../utils/auth';
 
 const SignupForm = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
 
   // handle form submit
   const handleFormSubmit = async (e) => {
