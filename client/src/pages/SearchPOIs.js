@@ -87,9 +87,13 @@ const SearchPOIs = () => {
 
       // get location from input
       axios
-        .get(`${getLocation}&key=${key}&input=${searchInput}`)
+        .get(`${getLocation}&key=${key}&input=${searchInput}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
         .then((res) => {
-          console.log('getLocation', res.data.candidates);
+          console.log("getLocation", res.data.candidates);
           const { lat, lng } = res.data.candidates[0].geometry.location;
           findPOIs(`${lat},${lng}`);
         })
@@ -100,9 +104,13 @@ const SearchPOIs = () => {
       // use location to get nearby POIs
       const findPOIs = (latlng) => {
         axios
-          .get(`${getPOIs}&key=${key}&location=${latlng}`)
+          .get(`${getPOIs}&key=${key}&location=${latlng}`, {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+          })
           .then(({ data }) => {
-            console.log('getPOIs', data);
+            console.log("getPOIs", data);
             getImgs(
               data.results.map((POI) => POI.photos?.[0].photo_reference),
               data.results
