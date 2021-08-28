@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "develop": "^1.0.0",
     "graphql": "^15.5.1",
     "react-spinners": "^0.11.0",
