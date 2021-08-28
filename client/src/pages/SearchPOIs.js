@@ -31,13 +31,11 @@ import POICard from '../components/POICard';
 
 // API urls
 const getLocation =
- cors
   'https://trip-assist.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry';
 const getPOIs =
   'https://trip-assist.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction';
-main
 const getImgURL =
-  "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400";
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400';
 
 // search for POIs
 const SearchPOIs = () => {
@@ -94,14 +92,13 @@ const SearchPOIs = () => {
             'Access-Control-Allow-Origin': '*',
           },
         })
-       
         .then((res) => {
           console.log('getLocation', res.data.candidates);
           const { lat, lng } = res.data.candidates[0].geometry.location;
           findPOIs(`${lat},${lng}`);
         })
         .catch((err) => {
-          console.log("is ths the error", err);
+          console.log('is ths the error', err);
         });
 
       // use location to get nearby POIs
