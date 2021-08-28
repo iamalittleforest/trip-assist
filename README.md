@@ -33,6 +33,12 @@ git clone https://github.com/iamalittleforest/project-3-trip-assist.git
 ```
 npm i
 ```
+4. Obtain an API Key from Google: https://console.cloud.google.com/google/maps-apis/start 
+
+5. Create a .env file in the root of the server folder and provide the following credentials:
+```
+API_KEY=
+```
 
 ## Usage
 Use the following command to run the application on the development server:
