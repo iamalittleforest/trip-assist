@@ -31,9 +31,11 @@ import POICard from '../components/POICard';
 
 // API urls
 const getLocation =
-  "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry";
+ cors
+  'https://trip-assist.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?&inputtype=textquery&fields=formatted_address,name,rating,opening_hours,geometry';
 const getPOIs =
-  "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction";
+  'https://trip-assist.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=1500&type=tourist_attraction';
+main
 const getImgURL =
   "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400";
 
@@ -50,7 +52,7 @@ const SearchPOIs = () => {
   const [key, setKey] = useState('');
   // set query for getting API key
   const { loading, data } = useQuery(QUERY_KEY);
-  const { loading:loadingMe, data:dataMe } = useQuery(QUERY_ME);
+  const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
   // set mutation for saving POI
   const [savePOI] = useMutation(SAVE_POI);
 
@@ -60,8 +62,8 @@ const SearchPOIs = () => {
   }, [loading]);
 
   // set up useEffect hook to get saved POI Ids
-  useEffect(()=> {
-    !loadingMe && dataMe?.me && setSavedPOIIds(dataMe.me.savedPOIs.map(a=> a.POI_id));
+  useEffect(() => {
+    !loadingMe && dataMe?.me && setSavedPOIIds(dataMe.me.savedPOIs.map(a => a.POI_id));
   }, [loadingMe])
 
   // create method to search for POIs and set state on form submit
@@ -89,12 +91,12 @@ const SearchPOIs = () => {
       axios
         .get(`${getLocation}&key=${key}&input=${searchInput}`, {
           headers: {
-            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Origin': '*',
           },
         })
        
         .then((res) => {
-          console.log("getLocation", res.data.candidates);
+          console.log('getLocation', res.data.candidates);
           const { lat, lng } = res.data.candidates[0].geometry.location;
           findPOIs(`${lat},${lng}`);
         })
@@ -107,11 +109,11 @@ const SearchPOIs = () => {
         axios
           .get(`${getPOIs}&key=${key}&location=${latlng}`, {
             headers: {
-              "Access-Control-Allow-Origin": "*",
+              'Access-Control-Allow-Origin': '*',
             },
           })
           .then(({ data }) => {
-            console.log("getPOIs", data);
+            console.log('getPOIs', data);
             getImgs(
               data.results.map((POI) => POI.photos?.[0].photo_reference),
               data.results
