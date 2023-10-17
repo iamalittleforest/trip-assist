@@ -27,7 +27,7 @@ Apollo Client, Apollo Server (Express), Axios, Chakra UI, Express.js, Framer Mot
 ## Installation
 1. Run the following command to clone the repository:
 ```
-git clone https://github.com/iamalittleforest/project-3-trip-assist.git
+git clone https://github.com/iamalittleforest/trip-assist.git
 ```
 2. Run the following command to install the NPM packages:
 ```
