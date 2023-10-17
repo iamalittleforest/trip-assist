@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Link to Deployed Application
-https://project-3-trip-assist.herokuapp.com/
+https://trip-assist.herokuapp.com/
 
 ## Table of Contents
 * [Description](#description)
@@ -15,7 +15,7 @@ https://project-3-trip-assist.herokuapp.com/
 * [Contact](#contact)
 
 ## Description
-Trip Assist is an travel application that is designed for travelers across the world. Users can search cities to build a collection of places that they would like to visit. They can also remove places from their collection once they have visited a place.
+Trip Assist is a travel application designed for travelers across the world. Users can search cities to build a collection of places that they would like to visit. They can also remove places from their collection once they have visited a place.
 
 ### Built With
 Apollo Client, Apollo Server (Express), Axios, Chakra UI, Express.js, Framer Motion, GraphQL, jsonwebtoken, jwt-decode, MongoDB, Mongoose, Node.js, React, sweetalert2
