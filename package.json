@@ -1,6 +1,9 @@
 {
   "name": "project-3-trip-assist",
   "version": "1.0.0",
+    "engines": {
+    "node": "18.x"
+  },
   "description": "",
   "main": "server/server.js",
   "scripts": {
